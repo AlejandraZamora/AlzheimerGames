@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a0a7b7c-c0ce-47fa-b76a-67ed1a9fba2b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/app/MathematicalCalculation/MathematicalCalculation.js" afterPath="$PROJECT_DIR$/src/main/resources/static/app/MathematicalCalculation/MathematicalCalculation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/app/services/services.js" afterPath="$PROJECT_DIR$/src/main/resources/static/app/services/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/static/app/MathematicalCalculation/MathematicalCalculation.js" afterPath="$PROJECT_DIR$/target/classes/static/app/MathematicalCalculation/MathematicalCalculation.js" />
-    </list>
+    <list default="true" id="8a0a7b7c-c0ce-47fa-b76a-67ed1a9fba2b" name="Default" comment="" />
     <ignored path="demo.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
