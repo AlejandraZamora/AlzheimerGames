@@ -9,7 +9,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
   });
 }])
 
-.controller('MathematicalCalculationCtrl', ['$rootScope', '$scope', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, persona, personas, $http, $resource, $location) {
+.controller('MathematicalCalculationCtrl', ['$rootScope', '$scope', 'newGame', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, newGame, persona, personas, $http, $resource, $location) {
     $scope.level=1;
     $scope.firstNumber="1";
     $scope.lastNumber="9";
@@ -91,7 +91,6 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         var endTime = new Date();
         var diff = endTime.getTime() - $scope.date.getTime();
         var time = parseInt(diff / 1000);
-        console.log(time);
         $scope.gameResult={"nombreJuego":"CalculosMatematicos","tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.maxLevel,"date":$scope.date};
         persona.get({personaId:""+$rootScope.idPersona})
             .$promise.then(
@@ -99,7 +98,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
                     function( value ){
                         $scope.personaT=value;
                         $scope.personaT.avancesJuegos.push($scope.gameResult);
-                        personas.update($scope.personaT)
+                        newGame.save({personaId:""+$rootScope.idPersona}, $scope.gameResult)
                         .$promise.then(
                             //success
                             function(value){

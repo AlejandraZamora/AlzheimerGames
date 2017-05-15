@@ -9,7 +9,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
   });
 }])
 
-.controller('MathematicalCalculationCtrl', ['$rootScope', '$scope', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, persona, personas, $http, $resource, $location) {
+.controller('MathematicalCalculationCtrl', ['$rootScope', '$scope', 'newGame', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, newGame, persona, personas, $http, $resource, $location) {
     $scope.level=1;
     $scope.firstNumber="1";
     $scope.lastNumber="9";
@@ -98,7 +98,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
                     function( value ){
                         $scope.personaT=value;
                         $scope.personaT.avancesJuegos.push($scope.gameResult);
-                        personas.update($scope.personaT)
+                        newGame.save({personaId:""+$rootScope.idPersona}, $scope.gameResult)
                         .$promise.then(
                             //success
                             function(value){
