@@ -8,10 +8,17 @@ angular.module('myApp.Login', ['ngRoute'])
     controller: 'LoginCtrl'
   });
 }])
+.config(function ($httpProvider) {
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {};
+  $httpProvider.defaults.headers.get = {};
+})
 
 .controller('LoginCtrl', ['$rootScope', '$scope', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, persona, personas, $http, $resource, $location) {
         $rootScope.logout = function () {
-          $http.post('/logout', {}).success(function () {
+          $http.post('logout', {}).success(function () {
               $rootScope.authenticated = false;
               $location.path("/");
           }).error(function (data) {
