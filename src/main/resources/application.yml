@@ -9,7 +9,7 @@ server:
       enabled: true
   compression: 
     enabled: true
-    mimeTypes: text/xml, text/css, text/html, application/json
+    mimeTypes: application/json
     minResponseSize: 4096
 
 spring: 

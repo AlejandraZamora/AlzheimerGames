@@ -2,10 +2,10 @@
 
 angular.module('services.factory', ['ngRoute', 'ngResource'])
 .factory('persona', function($resource){
-	return $resource('https://alzheimergameservices.herokuapp.com/persona/:personaId',{id:"@_personaId"},{get: { method: 'GET'}});
+	return $resource('https://alzheimergameservices.herokuapp.com/persona/:personaId',{id:"@_personaId"},{get: { method: 'GET'}, save: {method: 'POST',headers: { 'Content-Type': 'application/json' }}});
 })
 .factory('personas', function($resource) {
-	return $resource('https://alzheimergameservices.herokuapp.com/persona',{},{ 'get': { method: 'GET', isArray: true}, 'update': { method: 'PUT', isArray: false}});
+	return $resource('https://alzheimergameservices.herokuapp.com/persona',{},{ 'get': { method: 'GET', isArray: true}, 'update': { method: 'PUT', headers: { 'Content-Type': 'application/json'}, isArray: false}});
 })
 .factory('newPersona', function($resource) {
 	return $resource('https://alzheimergameservices.herokuapp.com/persona/new');
