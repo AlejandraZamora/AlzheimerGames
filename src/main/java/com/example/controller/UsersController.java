@@ -19,7 +19,7 @@ public class UsersController {
         return user;
     }
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public ResponseEntity<?> logout(Principal user) {
+    public ResponseEntity<?> logout() {
         return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
     }
 }

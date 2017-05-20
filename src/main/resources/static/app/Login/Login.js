@@ -18,12 +18,8 @@ angular.module('myApp.Login', ['ngRoute'])
 
 .controller('LoginCtrl', ['$rootScope', '$scope', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, persona, personas, $http, $resource, $location) {
         $rootScope.logout = function () {
-          $http.post('logout', {}).success(function () {
-              $rootScope.authenticated = false;
-              $location.path("/");
-          }).error(function (data) {
-              $rootScope.authenticated = false;
-          });
+          $rootScope.authenticated = false;
+          $location.path("/");
         };
 		var authenticate = function (credentials, callback) {
 	        if(credentials){
