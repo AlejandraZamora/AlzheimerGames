@@ -13,4 +13,7 @@ angular.module('myApp.MainPage', ['ngRoute'])
     $scope.continuePlayMath=function(){
             $location.path("MathematicalCalculation");
     }
+    $scope.continuePlayPictures=function(){
+            $location.path("Pictures");
+    }
 }]);

@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.MathematicalCalculation',
   'myApp.version',
   'myApp.template',
+  'myApp.Pictures',
   'services.factory',
   'chart.js'
 ]).

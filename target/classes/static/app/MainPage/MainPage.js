@@ -10,7 +10,10 @@ angular.module('myApp.MainPage', ['ngRoute'])
 }])
 
 .controller('MainPageCtrl', ['$rootScope', '$scope', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, persona, personas, $http, $resource, $location) {
-    $scope.continuePlay=function(){
+    $scope.continuePlayMath=function(){
             $location.path("MathematicalCalculation");
+    }
+    $scope.continuePlayPictures=function(){
+            $location.path("Pictures");
     }
 }]);
