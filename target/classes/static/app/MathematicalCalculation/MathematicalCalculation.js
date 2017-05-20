@@ -98,13 +98,12 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
                     function( value ){
                         $scope.personaT=value;
                         $scope.personaT.avancesJuegos.push($scope.gameResult);
-                        console.info(JSON.stringify($scope.personaT));
                         personas.save($scope.personaT)
                         .$promise.then(
                             //success
                             function(value){
                                 console.log("Patient update"+ $scope.personaT.avancesJuegos);
-                                location.path("MainPage");
+                                $location.path("MainPage");
                             },
                             //error
                             function( error ){
