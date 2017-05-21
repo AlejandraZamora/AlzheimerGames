@@ -9,7 +9,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
   });
 }])
 
-.controller('MathematicalCalculationCtrl', ['$rootScope', '$scope', 'newGame', 'persona','personas','$http','$resource', '$location', function ($rootScope, $scope, newGame, persona, personas, $http, $resource, $location) {
+.controller('MathematicalCalculationCtrl', ['$rootScope', '$timeout','$scope', 'newGame', 'persona','personas','$http','$resource', '$location', function ($rootScope, $timeout, $scope, newGame, persona, personas, $http, $resource, $location) {
     $scope.level=1;
     $scope.firstNumber="1";
     $scope.lastNumber="9";
@@ -17,6 +17,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
     $scope.ans2="";
     $scope.ans3="";
     $scope.oper1="";
+    $scope.operations=["+","-","x","÷"];
     $scope.oper2="";
     $scope.realAns="";
     $scope.ansPos="";
@@ -35,7 +36,8 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         var opts=loadAns($scope.level-1, $scope.firstNumber, $scope.lastNumber);
         $scope.oper1=randomIntFromInterval(parseInt(concatTimes($scope.firstNumber, "0", $scope.level-1)),parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
         $scope.oper2=randomIntFromInterval($scope.oper1,parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
-        $scope.realAns=parseInt($scope.oper1)+parseInt($scope.oper2);
+        $scope.operation=$scope.operations[Math.floor(Math.random() * $scope.operations.length)];
+        $scope.realAns=operate();
         $scope.ansPos=randomIntFromInterval(1, 3);
         opts[$scope.ansPos-1]=$scope.realAns;
         $scope.ans1=opts[0];
@@ -43,10 +45,31 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         $scope.ans3=opts[2];
     }
 
+    function operate(){
+        if($scope.oper1<$scope.oper2){
+            var tmp=$scope.oper1;
+            $scope.oper1=$scope.oper2;
+            $scope.oper2=tmp;
+        }
+        var answ=0;
+        if($scope.operation=="+"){
+            answ=parseInt($scope.oper1)+parseInt($scope.oper2);
+        }else if ($scope.operation=="-"){
+            answ=parseInt($scope.oper1)-parseInt($scope.oper2);
+        }else if ($scope.operation=="x"){
+            answ=parseInt($scope.oper1)*parseInt($scope.oper2);
+        }else if($scope.operation=="÷"){
+            answ=Math.floor(parseInt($scope.oper1)/parseInt($scope.oper2));
+        }
+        return answ;
+    }
+
     function verifyAns(){
+        var ic= document.getElementById("incorrect");
+        var c= document.getElementById("correct");
         if($scope.ansPos==$scope.buttonClicked){
             $scope.success++;
-            alert("Bien");
+            c.play();
             $scope.cont++;
             if($scope.cont>10){
                 $scope.cont=0;
@@ -57,7 +80,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
                 startLevel();
             }
         }else{
-            alert("Mal");
+            ic.play();
             if($scope.level==1){
                 startLevel();
             }else{

@@ -56,6 +56,7 @@ angular.module('myApp.Login', ['ngRoute'])
 	                                 function( value ){
 	                                     $scope.personaH=value;
 	                                     if(($scope.personaH.password==$rootScope.pasPersona) && ($scope.personaH.role=="Paciente")){
+	                                        $rootScope.age=$scope.personaH.edad;
                                             $location.path("MainPage");
 	                                     }else{
 	                                         $rootScope.authenticated=false;

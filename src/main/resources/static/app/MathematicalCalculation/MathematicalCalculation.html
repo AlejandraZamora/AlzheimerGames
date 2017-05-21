@@ -6,7 +6,7 @@
                     <h1 class="panel-title"><b>Nivel: {{level}} Operación Número: {{cont}}</b></h1>
                 </div>
                 <br>
-                <center><h2><b>{{oper1}} + {{oper2}} =</b></h2></center>
+                <center><h2><b>{{oper1}} {{operation}} {{oper2}} =</b></h2></center>
                 <br>
                 <div class="panel-body">
                     <form role="form">
@@ -17,6 +17,8 @@
                         </fieldset>
                     </form>
                 </div>
+                <audio id="correct" src="/app/Audio/correct.mp3"></audio>
+                <audio id="incorrect" src="/app/Audio/incorrect.mp3"></audio>
                 <h1><button ng-click="endGame()" class="btn btn-lg btn-danger btn-block">Salir</button></h1>
             </div>
         </div>
