@@ -53,7 +53,6 @@ angular.module('myApp.Pictures', ['ngRoute'])
         $scope.ans1=$rootScope.lines[$scope.opts[0]-1];
         $scope.ans2=$rootScope.lines[$scope.opts[1]-1];
         $scope.ans3=$rootScope.lines[$scope.opts[2]-1];
-
     }
 
     function typeOfFile(){
