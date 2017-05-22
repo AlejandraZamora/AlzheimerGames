@@ -69,24 +69,26 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         var c= document.getElementById("correct");
         if($scope.ansPos==$scope.buttonClicked){
             $scope.success++;
+            alert("Bien!!!")
             c.play();
             $scope.cont++;
             if($scope.cont>10){
                 $scope.cont=0;
                 $scope.level++;
                 if($scope.level>$scope.maxLevel){$scope.maxLevel=$scope.level;}
-                $timeout(startLevel(), 3000);
+                startLevel();
             }else{
-                $timeout(startLevel(), 3000);
+                startLevel();
             }
         }else{
             ic.play();
+            alert("Bien!!!")
             if($scope.level==1){
-                $timeout(startLevel(), 3000);
+                startLevel();
             }else{
                 $scope.cont=0;
                 $scope.level--;
-                $timeout(startLevel(), 3000);
+                startLevel();
             }
         }
     }

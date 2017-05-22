@@ -16,49 +16,74 @@ angular.module('myApp.Pictures', ['ngRoute'])
     $scope.ans3="";
     $scope.realAns="";
     $scope.buttonClicked="";
-    $scope.cont=0;
     $scope.exitView=false;
     $scope.questions=0;
     $scope.success=0;
     $scope.date=new Date();
+    $scope.len=0;
+    var liness;
+    $rootScope.lines=[];
+    readFileNames(typeOfFile());
 
-    startLevel();
 
     function startLevel(){
         $scope.questions++;
-        var opts=loadAns($scope.level-1, $scope.firstNumber, $scope.lastNumber);
-        $scope.oper1=randomIntFromInterval(parseInt(concatTimes($scope.firstNumber, "0", $scope.level-1)),parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
-        $scope.oper2=randomIntFromInterval($scope.oper1,parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
-        $scope.realAns=parseInt($scope.oper1)+parseInt($scope.oper2);
+        $scope.realAnsRand=randomIntFromInterval(1,$rootScope.lines.length);
+        console.info($scope.realAnsRand);
+        $scope.imageSrc="/app/Images/"+typeOfFile()+"/"+$scope.realAnsRand+".jpg";
+        $scope.opts=[];
+        for(var i=0; i<3; i++){
+            var n=randomIntFromInterval(1,$rootScope.lines.length);
+            if(i==0){
+                $scope.opts.push(n);
+            }else if(i>0 && n!=$scope.opts[i-1]){
+                $scope.opts.push(n);
+            }
+        }
+        $scope.realAns=$rootScope.lines[$scope.realAnsRand];
         $scope.ansPos=randomIntFromInterval(1, 3);
-        opts[$scope.ansPos-1]=$scope.realAns;
-        $scope.ans1=opts[0];
-        $scope.ans2=opts[1];
-        $scope.ans3=opts[2];
+        $scope.opts[$scope.ansPos-1]=$scope.realAnsRand;
+        $scope.ans1=$rootScope.lines[$scope.opts[0]-1];
+        $scope.ans2=$rootScope.lines[$scope.opts[1]-1];
+        $scope.ans3=$rootScope.lines[$scope.opts[2]-1];
+
+    }
+
+    function typeOfFile(){
+        var tans="";
+        if($rootScope.age>0 && $rootScope.age<13){
+            tans="Child";
+        }else if ($rootScope.age>=13 && $rootScope.age<35){
+            tans="Young";
+        }else if($rootScope.age>=35){
+            tans="Adult";
+        }return tans;
+    }
+
+    function readFileNames(fileType){
+        $http.get('/app/Pictures/data/'+fileType+'/names.txt').success(function (data) {
+            var fileToRead=data;
+            liness = data.split('\n');
+            for(var line = 0; line < liness.length; line++){
+              $rootScope.lines.push(liness[line]);
+              console.info($rootScope.lines[line]);
+            }
+            startLevel();
+        });
     }
 
     function verifyAns(){
+        var ic= document.getElementById("incorrect");
+        var c= document.getElementById("correct");
         if($scope.ansPos==$scope.buttonClicked){
             $scope.success++;
-            alert("Bien");
-            $scope.cont++;
-            if($scope.cont>10){
-                $scope.cont=0;
-                $scope.level++;
-                if($scope.level>$scope.maxLevel){$scope.maxLevel=$scope.level;}
-                startLevel();
-            }else{
-                startLevel();
-            }
+            c.play();
+            alert("Bien!!!");
+            startLevel();
         }else{
-            alert("Mal");
-            if($scope.level==1){
-                startLevel();
-            }else{
-                $scope.cont=0;
-                $scope.level--;
-                startLevel();
-            }
+            ic.play();
+            alert("Mal!!!");
+            startLevel();
         }
     }
 
@@ -85,7 +110,7 @@ angular.module('myApp.Pictures', ['ngRoute'])
         var endTime = new Date();
         var diff = endTime.getTime() - $scope.date.getTime();
         var time = parseInt(diff / 1000);
-        $scope.gameResult={"nombreJuego":"CalculosMatematicos","tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.maxLevel,"date":$scope.date};
+        $scope.gameResult={"nombreJuego":"Quien Es","tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.success, "date":$scope.date};
         persona.get({personaId:""+$rootScope.idPersona})
             .$promise.then(
                     //success
@@ -115,22 +140,6 @@ angular.module('myApp.Pictures', ['ngRoute'])
 
     $scope.continueGame=function(){
         $scope.exitView=false;
-    }
-
-    function loadAns(actualLevel, actFirstNumber, actLastNumber){
-        var ans=[];
-        for(var i=0; i<3; i++){
-            ans.push(randomIntFromInterval(parseInt(concatTimes(actFirstNumber, "0", actualLevel)),parseInt(concatTimes(actLastNumber, "9", actualLevel))))
-        }
-        return ans;
-    };
-
-    function concatTimes(str1, str2, times){
-        var txt1 = str1;
-        for (var i = 0; i < times; i++) {
-            txt1 += str2
-        }
-        return txt1;
     }
 
     function randomIntFromInterval(min,max)

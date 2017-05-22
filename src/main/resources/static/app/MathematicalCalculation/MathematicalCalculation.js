@@ -69,6 +69,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         var c= document.getElementById("correct");
         if($scope.ansPos==$scope.buttonClicked){
             $scope.success++;
+            alert("Bien!!!")
             c.play();
             $scope.cont++;
             if($scope.cont>10){
@@ -81,6 +82,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
             }
         }else{
             ic.play();
+            alert("Mal!!!")
             if($scope.level==1){
                 startLevel();
             }else{
