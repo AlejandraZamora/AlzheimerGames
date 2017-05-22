@@ -82,7 +82,7 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
             }
         }else{
             ic.play();
-            alert("Bien!!!")
+            alert("Mal!!!")
             if($scope.level==1){
                 startLevel();
             }else{

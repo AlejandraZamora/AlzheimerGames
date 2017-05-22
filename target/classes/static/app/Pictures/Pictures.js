@@ -29,19 +29,26 @@ angular.module('myApp.Pictures', ['ngRoute'])
     function startLevel(){
         $scope.questions++;
         $scope.realAnsRand=randomIntFromInterval(1,$rootScope.lines.length);
-        console.info($scope.realAnsRand);
         $scope.imageSrc="/app/Images/"+typeOfFile()+"/"+$scope.realAnsRand+".jpg";
         $scope.opts=[];
-        for(var i=0; i<3; i++){
+        $scope.ansPos=randomIntFromInterval(1, 3);
+        $scope.contWhile=0;
+        while($scope.contWhile<3){
             var n=randomIntFromInterval(1,$rootScope.lines.length);
-            if(i==0){
-                $scope.opts.push(n);
-            }else if(i>0 && n!=$scope.opts[i-1]){
-                $scope.opts.push(n);
+            if(n!=$scope.realAnsRand){
+                if($scope.contWhile==0){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }else if($scope.contWhile==1 && n!=$scope.opts[$scope.contWhile-1]){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }else if($scope.contWhile==2 && n!=$scope.opts[$scope.contWhile-1] && n!=$scope.opts[$scope.contWhile-2]){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }
             }
         }
         $scope.realAns=$rootScope.lines[$scope.realAnsRand];
-        $scope.ansPos=randomIntFromInterval(1, 3);
         $scope.opts[$scope.ansPos-1]=$scope.realAnsRand;
         $scope.ans1=$rootScope.lines[$scope.opts[0]-1];
         $scope.ans2=$rootScope.lines[$scope.opts[1]-1];
@@ -66,7 +73,6 @@ angular.module('myApp.Pictures', ['ngRoute'])
             liness = data.split('\n');
             for(var line = 0; line < liness.length; line++){
               $rootScope.lines.push(liness[line]);
-              console.info($rootScope.lines[line]);
             }
             startLevel();
         });
