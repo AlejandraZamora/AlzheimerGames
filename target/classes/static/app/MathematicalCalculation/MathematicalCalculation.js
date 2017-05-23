@@ -33,16 +33,32 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
 
     function startLevel(){
         $scope.questions++;
-        var opts=loadAns($scope.level-1, $scope.firstNumber, $scope.lastNumber);
+        $scope.opts=[];
         $scope.oper1=randomIntFromInterval(parseInt(concatTimes($scope.firstNumber, "0", $scope.level-1)),parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
         $scope.oper2=randomIntFromInterval($scope.oper1,parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
         $scope.operation=$scope.operations[Math.floor(Math.random() * $scope.operations.length)];
         $scope.realAns=operate();
         $scope.ansPos=randomIntFromInterval(1, 3);
-        opts[$scope.ansPos-1]=$scope.realAns;
-        $scope.ans1=opts[0];
-        $scope.ans2=opts[1];
-        $scope.ans3=opts[2];
+        $scope.contWhile=0;
+        while($scope.contWhile<3){
+            var n=randomIntFromInterval(parseInt(concatTimes($scope.firstNumber, "0", $scope.level-1)),parseInt(concatTimes($scope.lastNumber, "9", $scope.level-1)));
+            if(n!=$scope.realAns){
+                if($scope.contWhile==0){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }else if($scope.contWhile==1 && n!=$scope.opts[$scope.contWhile-1]){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }else if($scope.contWhile==2 && n!=$scope.opts[$scope.contWhile-1] && n!=$scope.opts[$scope.contWhile-2]){
+                    $scope.opts.push(n);
+                    $scope.contWhile++;
+                }
+            }
+        }
+        $scope.opts[$scope.ansPos-1]=$scope.realAns;
+        $scope.ans1=$scope.opts[0];
+        $scope.ans2=$scope.opts[1];
+        $scope.ans3=$scope.opts[2];
     }
 
     function operate(){
@@ -147,14 +163,6 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
     $scope.continueGame=function(){
         $scope.exitView=false;
     }
-
-    function loadAns(actualLevel, actFirstNumber, actLastNumber){
-        var ans=[];
-        for(var i=0; i<3; i++){
-            ans.push(randomIntFromInterval(parseInt(concatTimes(actFirstNumber, "0", actualLevel)),parseInt(concatTimes(actLastNumber, "9", actualLevel))))
-        }
-        return ans;
-    };
 
     function concatTimes(str1, str2, times){
         var txt1 = str1;
