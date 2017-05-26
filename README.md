@@ -1,4 +1,10 @@
 # AlzheimerGames
+______
+
+## Diseño e implementación de una plataforma genérica para el desarrollo de aplicaciones de e-Health y m-Health 
+
+## Aplicación desplegada:
+http://alzheimergames.herokuapp.com
 _______
 
 ### Manual de descarga, instalación y despliegue de la aplicación
