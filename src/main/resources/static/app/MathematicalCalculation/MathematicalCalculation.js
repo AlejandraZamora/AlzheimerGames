@@ -28,6 +28,14 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
     $scope.questions=0;
     $scope.success=0;
     $scope.date=new Date();
+    $scope.intentosSum=0;
+    $scope.aciertosSum=0;
+    $scope.intentosRes=0;
+    $scope.aciertosRes=0;
+    $scope.intentosMul=0;
+    $scope.aciertosMul=0;
+    $scope.intentosDiv=0;
+    $scope.aciertosDiv=0;
 
     startLevel();
 
@@ -83,8 +91,26 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
     function verifyAns(){
         var ic= document.getElementById("incorrect");
         var c= document.getElementById("correct");
+        if($scope.operation=="+"){
+            $scope.intentosSum++;
+        }else if ($scope.operation=="-"){
+            $scope.intentosRes++;
+        }else if ($scope.operation=="x"){
+            $scope.intentosMul++;
+        }else if($scope.operation=="÷"){
+            $scope.intentosDiv++;
+        }
         if($scope.ansPos==$scope.buttonClicked){
             $scope.success++;
+            if($scope.operation=="+"){
+                $scope.aciertosSum++;
+            }else if ($scope.operation=="-"){
+                $scope.aciertosRes++;
+            }else if ($scope.operation=="x"){
+                $scope.aciertosMul++;
+            }else if($scope.operation=="÷"){
+                $scope.aciertosDiv++;
+            }
             alert("Bien!!!")
             c.play();
             $scope.cont++;
@@ -132,13 +158,17 @@ angular.module('myApp.MathematicalCalculation', ['ngRoute'])
         var endTime = new Date();
         var diff = endTime.getTime() - $scope.date.getTime();
         var time = parseInt(diff / 1000);
-        $scope.gameResult={"nombreJuego":"CalculosMatematicos","tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.maxLevel,"date":$scope.date};
+        $scope.porcSum=($scope.intentosSum==0)?0:Math.floor(($scope.aciertosSum*100)/$scope.intentosSum);
+        $scope.porcRes=($scope.intentosRes==0)?0:Math.floor(($scope.aciertosRes*100)/$scope.intentosRes);
+        $scope.porcMul=($scope.intentosMul==0)?0:Math.floor(($scope.aciertosMul*100)/$scope.intentosMul);
+        $scope.porcDiv=($scope.intentosDiv==0)?0:Math.floor(($scope.aciertosDiv*100)/$scope.intentosDiv);
+        $scope.gameResult={"tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.maxLevel,"date":$scope.date, "porcentajeSumasResueltas":$scope.porcSum, "porcentajeRestasResueltas":$scope.porcRes, "porcentajeMultiplicacionesResueltas":$scope.porcMul, "porcentajeDivisionesResueltas":$scope.porcDiv};
         persona.get({personaId:""+$rootScope.idPersona})
             .$promise.then(
                     //success
                     function( value ){
                         $scope.personaT=value;
-                        $scope.personaT.avancesJuegos.push($scope.gameResult);
+                        $scope.personaT.avancesJuegosCalculos.push($scope.gameResult);
                         personas.save($scope.personaT)
                         .$promise.then(
                             //success

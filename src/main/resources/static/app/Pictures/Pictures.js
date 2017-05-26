@@ -115,13 +115,13 @@ angular.module('myApp.Pictures', ['ngRoute'])
         var endTime = new Date();
         var diff = endTime.getTime() - $scope.date.getTime();
         var time = parseInt(diff / 1000);
-        $scope.gameResult={"nombreJuego":"Quien Es","tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success,"nivelMaximoAlcanzado":$scope.success, "date":$scope.date};
+        $scope.gameResult={"tiempoSegundos":time,"numeroPreguntasIntentos":$scope.questions,"numeroPreguntasAciertos":$scope.success, "date":$scope.date};
         persona.get({personaId:""+$rootScope.idPersona})
             .$promise.then(
                     //success
                     function( value ){
                         $scope.personaT=value;
-                        $scope.personaT.avancesJuegos.push($scope.gameResult);
+                        $scope.personaT.avancesJuegosImagenes.push($scope.gameResult);
                         personas.save($scope.personaT)
                         .$promise.then(
                             //success
